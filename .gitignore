@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Ignoring models
+models/*
+
+# Ignoring VSCode metadata
+.vscode
