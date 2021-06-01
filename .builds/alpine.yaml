@@ -1,0 +1,25 @@
+---
+image: alpine/latest
+packages:
+  - docker
+repositories: null
+shell: true
+secrets:
+  - 8fdac794-0d89-4bbd-b3f2-57b5748594ea
+sources:
+  - https://github.com/cryptorelief/cryptorelief-nlp-server
+environment:
+  DOCKER_USER: 'cisrht'
+tasks:
+  - setup: |
+      sudo /etc/init.d/docker start
+      sudo addgroup $(whoami) docker
+  - build: |
+      cat ~/hub_pat | sudo docker login -u "$DOCKER_USER" --password-stdin=true
+      cd cryptorelief-nlp-server
+      COMMIT_HASH=$(git rev-parse --short HEAD)
+      docker build -t covidbot/nlp-server:${COMMIT_HASH} .
+      sudo docker push covidbot/nlp-server:${COMMIT_HASH}
+triggers: null
+
+# vim:ts=2:sw=2:sts=2
