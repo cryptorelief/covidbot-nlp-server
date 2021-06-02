@@ -25,7 +25,7 @@ RUN mkdir -p /run/uwsgi/ \
         && adduser -DHs /sbin/nologin rauser \
         && chown -R rauser.rauser /run/uwsgi/ /app/
 
-COPY --from=builder /app /app/http-api
-COPY . /app/http-api
-ENV PATH="/app/http-api/.venv/bin:$PATH"
+COPY --from=builder /app /app/covidbot-nlp-server
+COPY . /app/covidbot-nlp-server
+ENV PATH="/app/covidbot-nlp-server/.venv/bin:$PATH"
 CMD [ "/usr/sbin/uwsgi", "--ini", "/app/http-api/conf/uwsgi.ini" ]
