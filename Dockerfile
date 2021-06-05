@@ -11,7 +11,7 @@ RUN .venv/bin/pip install --no-cache-dir -r prod.requirements.txt && find /app/.
 FROM alpine:3.13
 LABEL maintainer="Mayank <mp@mailx.es>"
 
-EXPOSE 4444
+EXPOSE 5555
 
 WORKDIR /app/covidbot-nlp-server
 RUN apk add --no-cache --update \
@@ -22,8 +22,7 @@ RUN apk add --no-cache --update \
 
 RUN mkdir -p /run/uwsgi/ \
         && pip install uwsgitop \
-        && adduser -DHs /sbin/nologin rauser \
-        && chown -R rauser.rauser /run/uwsgi/ /app/
+        && adduser -DHs /sbin/nologin rauser
 
 COPY --from=builder /app /app/covidbot-nlp-server
 COPY . /app/covidbot-nlp-server
