@@ -13,12 +13,12 @@ LABEL maintainer="Mayank <mp@mailx.es>"
 
 EXPOSE 4444
 
-WORKDIR /app/http-api
+WORKDIR /app/covidbot-nlp-server
 RUN apk add --no-cache --update \
         uwsgi-python3 \
         libstdc++ \
-        libpq \
-        py-pip
+        py-pip \
+        bash
 
 RUN mkdir -p /run/uwsgi/ \
         && pip install uwsgitop \
@@ -27,5 +27,8 @@ RUN mkdir -p /run/uwsgi/ \
 
 COPY --from=builder /app /app/covidbot-nlp-server
 COPY . /app/covidbot-nlp-server
+COPY conf/entrypoint.sh /entrypoint.sh
 ENV PATH="/app/covidbot-nlp-server/.venv/bin:$PATH"
-CMD [ "/usr/sbin/uwsgi", "--ini", "/app/http-api/conf/uwsgi.ini" ]
+RUN chown -R rauser.rauser /run/uwsgi/ /app/
+USER rauser
+CMD [ "/entrypoint.sh" ]
