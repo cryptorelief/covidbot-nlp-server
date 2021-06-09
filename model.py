@@ -33,7 +33,7 @@ class Model:
             if i.label == 'PER':
                 result['Name'] = i.text
         
-        result['phonenumber'] = self.getPhoneNumbers(text)
+        result['phone'] = self.getPhoneNumbers(text)
         
         # print(metadata)
         if location is None:
