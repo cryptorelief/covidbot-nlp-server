@@ -11,9 +11,10 @@ class Model:
         doc = self.nlp(text)
         messageType = self.getMessageType(doc)
         if messageType == 'irrelevant':
-            return {'messageType':messageType}
+            return {'type': messageType}
         
         result = {}
+        result['type'] = messageType
         result['resource'] = resource = []
         
         location = None
