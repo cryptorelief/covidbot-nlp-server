@@ -10,7 +10,7 @@ model = Model(latest_version)
 # The process method should get a json in this format: 
 # {'messages': [{'metadata': ['some group name maybe'],
 #                'text': 'I need an icu bed urgently. I am in hyderabad now. Call me at 3432746283'}]}
-@app.route("/process")
+@app.post("/process")
 def process():
     # TODO: Error handling
     messages = request.json['messages']
